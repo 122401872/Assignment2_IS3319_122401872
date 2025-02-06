@@ -1,0 +1,27 @@
+<form class="card-details" action="{{ url_for('checkout') }}" method="post">
+    <div class="form-group mb-0">
+        <p class="text-warning mb-0">Card Number</p>
+        <input type="text" name="card-num" placeholder="1234 5678 9012 3457" required>
+    </div>
+    <div class="form-group">
+        <p class="text-warning mb-0">Cardholder's Name</p>
+        <input type="text" name="name" placeholder="Name" required>
+    </div>
+    <div class="form-group pt-2">
+        <div class="row d-flex">
+            <div class="col-sm-4">
+                <p class="text-warning mb-0">Expiration</p>
+                <input type="text" name="exp" placeholder="MM/YYYY" required>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-warning mb-0">Cvv</p>
+                <input type="password" name="cvv" placeholder="&#9679;&#9679;&#9679;" required>
+            </div>
+            <div class="col-sm-5 pt-0">
+                <button class="btn btn-outline-dark" type="submit">
+                    Pay
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

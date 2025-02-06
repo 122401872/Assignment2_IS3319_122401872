@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Control the Game</h1>
+                    <p class="lead fw-normal text-white-50 mb-0"></p>
+                </div>
+            </div>
+        </header>
+        <!-- Add Product Button -->
+        <div class="container py-3">
+            <div class="text-center">
+                <a class="btn btn-success" href="{{ url_for('EditProduct') }}">Add Product</a>
+            </div>
+        </div>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% for Product in Products %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{url_for('static', filename=Product.product_image_name)}}" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ Product.title }}</h5>
+                                    <!-- Product price-->
+                                    {{ Product.price }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="d-flex justify-content-between">
+                                    <a class="btn btn-outline-dark mt-auto" href="{{ url_for('EditProduct', product_id=Product.product_id)}}">Edit Product</a>
+                                    <a class="btn btn-danger mt-auto" href="{{ url_for('delete', product_id=Product.product_id)}}">Delete Product</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+{% endblock %}

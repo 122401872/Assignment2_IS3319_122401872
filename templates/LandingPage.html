@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!--Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!--Core theme CSS (Include Bootstrap)-->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    <style>
+        body {
+    position: relative; /* Required for pseudo-element positioning */
+    background-image: url('{{ url_for('static', filename='images/Background.webp') }}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+body::before {
+    content: ""; /* Creates an empty pseudo-element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: inherit; /* Inherit the background image from the body */
+    background-size: inherit;
+    background-repeat: inherit;
+    background-position: inherit;
+    filter: blur(8px); /* Apply blur to the background image */
+    z-index: -1; /* Place the pseudo-element behind the content */
+}
+
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .cards span {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="text-center py-5">
+        <div class="container">
+            <h1 class="display-4" style="font-weight: bold;">Welcome to World of Controllers</h1>
+            <p class="lead">Experience gaming like never before</p>
+
+            <a href="{{ url_for('ProductSpread') }}" class="btn btn-lg btn-light">Browse</a>
+            <a href="{{ url_for('login') }}" class="btn btn-lg btn-light">Customer Login</a>
+        </div>
+    </header>
+
+    <!-- Joke Section -->
+    <div class="Joke-Container" style="text-align: center; margin-top: 20px;">
+        <div id="setup" style="font-size: 24px; font-style: italic; color: black; text-align: center;">Loading Joke...</div>
+        <div id="punchline" style="font-size: 24px; font-style: italic; color: black; text-align: center;">Loading Punchline...</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/api/jokes")
+            .then(response => response.json())
+            .then(data => {
+                console.log("Received API Data:", data); // Debugging
+
+                // Access 'data' object inside the response
+                if (data && data.setup && data.punchline) {
+                    document.getElementById("setup").innerText = `"${data.setup}"`;  // Display the setup
+                    document.getElementById("punchline").innerText = `"${data.punchline}"`;  // Display the punchline
+                } else {
+                    document.getElementById("setup").innerText = "Failed to load Joke";
+                    document.getElementById("punchline").innerText = "Failed to load Joke";
+                }
+            })
+            .catch(error => {
+                console.error("Error Fetching Joke", error);
+                document.getElementById("setup").innerText = "Error Loading Joke";  // Show error if the fetch fails
+                document.getElementById("punchline").innerText = "Error Loading Joke";
+            });
+        });
+    </script>
+</body>
+</html>
