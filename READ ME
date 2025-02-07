@@ -2,6 +2,8 @@
 WorldGaming is a Flask-based e-commerce web application that allows customers to browse, search, and purchase gaming controllers. The app also features user authentication, a shopping cart, an admin dashboard for product management, and a fun landing page that displays a random joke from the Official Joke API.
 
 ## Features
+--**Completed Functionality:**
+    I completed 1-7 of the project phase 2
 
 - **Product Browsing & Filtering:**
   Customers can view a list of gaming controllers and filter products by console type.
