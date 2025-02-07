@@ -14,32 +14,33 @@
                       <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
                     </div>
                     <hr class="my-4">
-                  {% for item in cart %}
-                    <div class="row mb-4 d-flex justify-content-between align-items-center">
-                      <div class="col-md-3 col-lg-3 col-xl-3">
-                        <h6 class="text-black mb-0">{{ item['name'] }}</h6>
+                  {% for Product in cart %}
+                      <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                          <h6 class="text-black mb-0">{{ Product.title }}</h6>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                          <button class="btn btn-link px-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <input id="form1" min="0" name="quantity" value="{{ Product['quantity'] }}" type="number"
+                            class="form-control form-control-sm" />
+                          <button class="btn btn-link px-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                          <h6 class="mb-0">{{ '%.2f'|format((Product.price|float) * Product['quantity']) }}</h6>
+                        </div>
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                          <!-- Removal Button -->
+                          <a href="{{ url_for('remove_from_cart', product_id=Product['id']) }}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-times"></i> Remove
+                          </a>
+                        </div>
                       </div>
-                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                        <button class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                          <i class="fas fa-minus"></i>
-                        </button>
-
-                        <input id="form1" min="0" name="quantity" value="{{ item['quantity'] }}" type="number"
-                          class="form-control form-control-sm" />
-
-                        <button class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                          <i class="fas fa-plus"></i>
-                        </button>
-                      </div>
-                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                        <h6 class="mb-0">{{ item['price'] }}</h6>
-                      </div>
-                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                        <a href="{{ url_for('remove_from_cart', product_id=item['id']) }}" class="text-muted"><i class="fas fa-times"></i></a>
-                      </div>
-                    </div>
                     {% endfor %}
 
                       <div class="col-md-1 col-lg-1 col-xl-1 text-end">

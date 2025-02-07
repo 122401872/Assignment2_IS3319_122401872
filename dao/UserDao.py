@@ -10,6 +10,7 @@ class UserDAO:
         """Initializes the database and creates the users table if it doesn't exist."""
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
+        #creates table if it does not exist
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 userid INTEGER PRIMARY KEY,
@@ -29,7 +30,7 @@ class UserDAO:
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
-        # Check if the table is empty
+        # Checks if the table is empty
         cursor.execute("SELECT COUNT(*) FROM users")
         if cursor.fetchone()[0] == 0:
             initial_users = [

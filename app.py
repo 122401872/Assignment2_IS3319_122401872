@@ -94,12 +94,13 @@ def add_to_cart(product_id):
         cart = session.get('cart', [])
 
         cart.append({
-            'id': product.product_id,
+            'id': product.product_id,  # Ensure this is an integer
             'name': product.title,
             'description': product.description,
             'price': product.price,
             'quantity': 1,
         })
+
         session['cart'] = cart
         flash('Product added to cart!', 'success')
     else:
@@ -116,10 +117,41 @@ def remove_from_cart(product_id):
 
     # Filter out the item to be removed
     cart = session.get('cart', [])
-    cart = [item for item in cart if item['id'] != product_id]
+    cart = [product for product in cart if product['id'] != product_id]
     session['cart'] = cart  # Update the session cart
     flash('You have successfully removed the item', 'success')
     return redirect(url_for('cart'))  # Redirect to the cart page
+
+
+@app.route('/update_cart', methods=['POST'])
+def update_cart():
+    product_id = request.form.get('product_id')
+    action = request.form.get('action')
+
+    # Get the current quantity from the form (if provided)
+    try:
+        quantity = int(request.form.get('quantity', 1))
+    except ValueError:
+        quantity = 1
+
+    # Retrieve the current cart from the session
+    cart = session.get('cart', [])
+
+    # Loop through the cart items and update the one with the matching product ID
+    for product in cart:
+        if str(product['produtct_id']) == str(product_id):
+            if action == 'increment':
+                quantity += 1
+            elif action == 'decrement' and quantity > 1:
+                quantity -= 1
+            # Update the item's quantity
+            product['quantity'] = quantity
+            break
+
+    session['cart'] = cart  # Save the updated cart back into the session
+    flash('Cart updated successfully!', 'success')
+    return redirect(url_for('cart'))
+
 
 # Admin dashboard route
 @app.route('/Admin')

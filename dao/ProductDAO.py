@@ -11,7 +11,7 @@ class ProductDAO:
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
-        # Create table if it does not exist
+        # Creates table if it does not exist
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS products (
                 product_id INTEGER PRIMARY KEY,
@@ -23,7 +23,7 @@ class ProductDAO:
             )
         ''')
 
-        # Check if 'console' column exists before adding it
+        # Checks if 'console' column exists before adding it
         cursor.execute("PRAGMA table_info(products)")
         columns = [row[1] for row in cursor.fetchall()]
 
@@ -40,7 +40,7 @@ class ProductDAO:
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
-        # Check if the table is empty
+        # Checks if the table is empty
         cursor.execute("SELECT COUNT(*) FROM products")
         if cursor.fetchone()[0] == 0:
             initial_products = [
